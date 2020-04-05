@@ -3,10 +3,10 @@
 #include "MyTimer.h"
 
 #include "StateMachine/StateMachine.h"
-#include "Display/Display.h"
+#include "MyOledDisplay/MyOledDisplay.h"
 #include "MyGPS/MyGPS.h"
 
-Display _display;
+MyOledDisplay _myOledDisplay;
 OneButton _button = OneButton(PIN_Button, true, true);
 StateMachine _stateMachine;
 MyTimer _myTimer;
@@ -15,7 +15,7 @@ MyGPS *_myGPS = new MyGPS(GMT_HOURS, GMT_MINUTES);
 void OnStateChanged()
 {
   auto state = _stateMachine.GetState();
-  _display.Print(state);
+  _myOledDisplay.Print(state);
 }
 
 void OnLongPress()
@@ -28,7 +28,7 @@ void OnTmerTick()
 
 void setup()
 {
-  _display.Init();
+  _myOledDisplay.Init();
   _button.attachClick([]() { _stateMachine.Run(ButtonClickCommand); });
   _button.attachLongPressStart(&OnLongPress);
   _stateMachine.AttachOnStateChanged(&OnStateChanged);

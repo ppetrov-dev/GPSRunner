@@ -1,11 +1,11 @@
-#ifndef displayH
-#define displayH
+#ifndef myOledDisplayH
+#define myOledDisplayH
 
 #include <U8g2lib.h>
 #include "enums.h"
 #include "settings.h"
 
-class Display
+class MyOledDisplay
 {
 private:
     U8X8_SSD1306_128X64_NONAME_4W_SW_SPI _oled;
@@ -16,9 +16,9 @@ private:
     void PrintFourthPage();
 
 public:
-    Display();
+    MyOledDisplay();
     void Init();
 
     void Print(State state);
 };
-#endif
+#endif //myOledDisplayH

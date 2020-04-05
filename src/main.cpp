@@ -6,11 +6,11 @@
 #include "MyOledDisplay/MyOledDisplay.h"
 #include "MyGPS/MyGPS.h"
 
-MyOledDisplay _myOledDisplay;
 OneButton _button = OneButton(PIN_Button, true, true);
 StateMachine _stateMachine;
 MyTimer _myTimer;
-MyGPS *_myGPS = new MyGPS(GMT_HOURS, GMT_MINUTES);
+MyGPS* _myGPS = new MyGPS(GMT_HOURS, GMT_MINUTES);
+MyOledDisplay _myOledDisplay = MyOledDisplay(_myGPS);
 
 void OnStateChanged()
 {

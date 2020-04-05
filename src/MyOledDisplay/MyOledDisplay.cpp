@@ -1,6 +1,7 @@
 #include "MyOledDisplay.h"
 
-MyOledDisplay::MyOledDisplay() : _oled(PIN_Display_Clock, PIN_Display_Data, PIN_Display_CS, PIN_Display_DC, PIN_Display_Reset)
+MyOledDisplay::MyOledDisplay(MyGPS *myGPS)
+    : _oled(PIN_Display_Clock, PIN_Display_Data, PIN_Display_CS, PIN_Display_DC, PIN_Display_Reset), _myGPS(myGPS)
 {
 }
 

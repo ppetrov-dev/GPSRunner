@@ -6,7 +6,7 @@
 
 // Uncomment one DST changeover rule, or define your own:
 //#define DST_USA
-//#define DST_EU
+#define DST_EU
 
 #if defined(DST_USA)
 static const uint8_t DST_SpringMonth = 3;
@@ -26,7 +26,6 @@ static const uint8_t DST_FallDate = 31; // latest last Sunday
 static const uint8_t DST_FallHour = 1;
 #define CalculateDaylightSavingTime
 #endif
-
 class MyGPS
 {
 private:
@@ -35,9 +34,16 @@ private:
 
     NeoGPS::clock_t _timezoneOffset;
     void AdjustTime(NeoGPS::time_t &dt);
+    void ReadAndAdjustTime();
 
 public:
     MyGPS(int gmtHours, int gmtMinutes);
+
+    bool GetIsValid();
+    int GetSatellitesCount();
+    NeoGPS::Location_t GetCurrentLocation();
     void ReadWhileAvailable();
+    float GetSpeedKmh();
+    String GetDateTime();
 };
 #endif //myGPSH

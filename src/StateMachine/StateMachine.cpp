@@ -4,8 +4,14 @@ void StateMachine::Run(Command command)
 {
     switch (command)
     {
-    case ButtonClickCommand:
+    case Command::ButtonClickCommand:
         HandleButtonClick();
+        break;
+    case Command::ButtonLongPressCommand:
+        HandleButtonLongPress();
+    case Command::GpsValidCommand:
+        HandleGpsValidCommand();
+        break;
         break;
     default:
         break;
@@ -15,9 +21,22 @@ State StateMachine::GetState()
 {
     return _state;
 }
+void StateMachine::HandleGpsValidCommand()
+{
+    if (_state != State::Initializing)
+        return;
+
+    SetState(State::Ready);
+}
 void StateMachine::HandleButtonClick()
 {
     MoveNextState();
+}
+void StateMachine::HandleButtonLongPress()
+{
+    if (_state != State::Ready)
+        return;
+    SetState(State::FirstPageState);
 }
 
 void StateMachine::SetState(State newState)
@@ -42,31 +61,41 @@ State StateMachine::GetNextState()
 {
     switch (_state)
     {
-    case FirstPageState:
-        return SecondPageState;
-    case SecondPageState:
+    case State::Initializing:
+        return State::Initializing;
+    case State::Ready:
+        return State::Ready;
+
+    case State::FirstPageState:
+        return State::SecondPageState;
+    case State::SecondPageState:
         return ThirdPageState;
-    case ThirdPageState:
-        return FourthPageState;
-    case FourthPageState:
-        return FirstPageState;
+    case State::ThirdPageState:
+        return State::FourthPageState;
+    case State::FourthPageState:
+        return State::FirstPageState;
     }
-    return InvalidState;
+    return State::InvalidState;
 }
 State StateMachine::GetPreviousState()
 {
     switch (_state)
     {
-    case FirstPageState:
-        return FourthPageState;
-    case SecondPageState:
-        return FirstPageState;
-    case ThirdPageState:
-        return SecondPageState;
-    case FourthPageState:
-        return ThirdPageState;
+    case State::Initializing:
+        return State::Initializing;
+    case State::Ready:
+        return State::Ready;
+
+    case State::FirstPageState:
+        return State::FourthPageState;
+    case State::SecondPageState:
+        return State::FirstPageState;
+    case State::ThirdPageState:
+        return State::SecondPageState;
+    case State::FourthPageState:
+        return State::ThirdPageState;
     }
-    return InvalidState;
+    return State::InvalidState;
 }
 
 void StateMachine::AttachOnStateChanged(callback callback)

@@ -53,13 +53,36 @@ void MyGPS::AdjustTime(NeoGPS::time_t &dt)
 
     dt = seconds; // convert seconds back to a date/time structure
 }
+float MyGPS::GetSpeedKmh()
+{
+    return _fix.speed_kph();
+}
+String MyGPS::GetDateTime()
+{
+     auto datetime = String(_fix.dateTime.date) + "." + String(_fix.dateTime.month) + " " + String(_fix.dateTime.hours) + ":" + String(_fix.dateTime.minutes);
+    return datetime;
+}
+int MyGPS::GetSatellitesCount()
+{
+    return _fix.satellites;
+}
+NeoGPS::Location_t MyGPS::GetCurrentLocation()
+{
+    return _fix.location;
+}
+bool MyGPS::GetIsValid()
+{
+    return _fix.valid.date && _fix.valid.time && _fix.valid.speed && _fix.valid.satellites && _fix.valid.status;
+}
+void MyGPS::ReadAndAdjustTime()
+{
+    _fix = _gps.read();
+    if (_fix.valid.time && _fix.valid.date)
+        AdjustTime(_fix.dateTime);
+}
 
 void MyGPS::ReadWhileAvailable()
 {
     while (_gps.available(gpsPort))
-    {
-        _fix = _gps.read();
-        if (_fix.valid.time && _fix.valid.date)
-            AdjustTime(_fix.dateTime);
-    }
+        ReadAndAdjustTime();
 }

@@ -3,16 +3,20 @@
 
 enum State
 {
-  InvalidState,
+  Initializing,
+  Ready,
   FirstPageState,
   SecondPageState,
   ThirdPageState,
-  FourthPageState
+  FourthPageState,
+  InvalidState
 };
 
-enum Command{
+enum Command
+{
   ButtonClickCommand,
+  ButtonLongPressCommand,
+  GpsValidCommand,
 };
-
 
 #endif

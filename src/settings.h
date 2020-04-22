@@ -1,7 +1,7 @@
 #ifndef settingsH
 #define settingsH
 
-#include "enums.h"
+#include <enums.h>
 
 #define DEBUG 1
 

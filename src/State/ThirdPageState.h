@@ -1,7 +1,7 @@
 #ifndef ThirdPageStateH
 #define ThirdPageStateH
 
-#include "StateBase.h"
+#include <State/StateBase.h>
 
 class ThirdPageState : public StateBase
 {
@@ -9,13 +9,7 @@ private:
     /* data */
 public:
     void Run(Command command) override;
-    ThirdPageState(Context *context) : StateBase(context)
-    {
-    }
+    void Enter() override;
 };
-
-void ThirdPageState::Run(Command command)
-{
-}
 
 #endif //ThirdPageStateH

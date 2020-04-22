@@ -1,47 +1,26 @@
 #ifndef contextH
 #define contextH
 
-#include "State/StateBase.h"
-#include "enums.h"
-
+#include <settings.h>
+#include <U8g2lib.h>
+#include <MyGPS/MyGPS.h>
+#include <State/StateBase.h>
 class Context
 {
 private:
     StateBase *_state;
+
     void DisposeStateIfNeeded();
 
 public:
-    Context();
+    Context(MyGPS *myGPS);
     ~Context();
     void TransitionTo(StateBase *state);
+    void Init();
     void Run(Command command);
+
+    MyGPS *_myGPS;
+    U8X8_SSD1306_128X64_NONAME_4W_SW_SPI *_oled;
 };
 
-Context::Context() : _state(nullptr)
-{
-}
-
-Context::~Context()
-{
-    DisposeStateIfNeeded();
-}
-void Context::DisposeStateIfNeeded()
-{
-    if (_state == nullptr)
-        return;
-        
-    delete _state;
-}
-void Context::Run(Command command)
-{
-    if(_state == nullptr)
-        return;
-
-    _state->Run(command);
-}
-void Context::TransitionTo(StateBase *state)
-{
-    DisposeStateIfNeeded();
-    _state = state;
-}
 #endif //contextH

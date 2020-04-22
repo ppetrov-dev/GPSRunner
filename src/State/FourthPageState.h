@@ -1,7 +1,7 @@
 #ifndef FourthPageStateH
 #define FourthPageStateH
 
-#include "StateBase.h"
+#include <State/StateBase.h>
 
 class FourthPageState : public StateBase
 {
@@ -9,13 +9,6 @@ private:
     /* data */
 public:
     void Run(Command command) override;
-    FourthPageState(Context *context) : StateBase(context)
-    {
-    }
+    void Enter() override;
 };
-
-void FourthPageState::Run(Command command)
-{
-}
-
 #endif //FourthPageStateH

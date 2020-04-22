@@ -1,7 +1,7 @@
 #ifndef SecondPageStateH
 #define SecondPageStateH
 
-#include "StateBase.h"
+#include <State/StateBase.h>
 
 class SecondPageState : public StateBase
 {
@@ -9,13 +9,7 @@ private:
     /* data */
 public:
     void Run(Command command) override;
-    SecondPageState(Context *context) : StateBase(context)
-    {
-    }
+    void Enter() override;
 };
-
-void SecondPageState::Run(Command command)
-{
-}
 
 #endif //SecondPageStateH

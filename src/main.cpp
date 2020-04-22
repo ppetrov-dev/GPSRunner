@@ -1,65 +1,24 @@
-#include <Arduino.h>
-#include "OneButton.h"
-#include "MyTimer.h"
-
-#include "InitializingTitle/InitializingTitle.h"
-#include "StateMachine/StateMachine.h"
-#include "MyOledDisplay/MyOledDisplay.h"
-#include "MyGPS/MyGPS.h"
-
-#include "State/Context.h"
-#include "State/ReadyState.h"
+#include <OneButton.h>
+#include <MyTimer.h>
+#include <MyGPS/MyGPS.h>
+#include <State/Context.h>
 
 OneButton _button = OneButton(PIN_Button, true, true);
-StateMachine _stateMachine;
 MyTimer _halfSecondTimer;
 MyGPS *_myGPS = new MyGPS(GMT_HOURS, GMT_MINUTES);
-InitializingTitle _initializingTitle;
-MyOledDisplay _myOledDisplay = MyOledDisplay(_myGPS, &_initializingTitle);
-Context *_context = new Context();
+Context *_context = new Context(_myGPS);
 
-void OnStateChanged()
-{
-  auto state = _stateMachine.GetState();
-  _myOledDisplay.Print(state);
-}
-
-void OnClick()
-{
-  _stateMachine.Run(Command::ButtonClickCommand);
-}
-void OnLongPress()
-{
-  _stateMachine.Run(Command::ButtonLongPressCommand);
-}
-
-void OnHalfSecondTimerTick()
-{
-  auto state = _stateMachine.GetState();
-  if (state == State::Initializing)
-  {
-    _myOledDisplay.PrintInitalizingPage();
-
-    if (_myGPS->GetIsValid())
-      _stateMachine.Run(Command::GpsValidCommand);
-  }
-  if (state == State::Ready)
-    _myOledDisplay.PrintReadyPage();
-}
 void setup()
 {
-  _myOledDisplay.Init();
-  _button.attachClick(&OnClick);
-  _button.attachLongPressStart(&OnLongPress);
-  _stateMachine.AttachOnStateChanged(&OnStateChanged);
-  _halfSecondTimer.SetInterval(500);
-  _halfSecondTimer.AttachOnTick(&OnHalfSecondTimerTick);
-  
-  _context->TransitionTo(new ReadyState(_context));
-
   DEBUG_PORT.begin(9600);
   while (!DEBUG_PORT)
     ;
+
+  _context->Init();
+  _button.attachClick([]() { _context->Run(Command::ButtonClickCommand); });
+  _button.attachLongPressStart([]() { _context->Run(Command::ButtonLongPressCommand); });
+  _halfSecondTimer.SetInterval(500);
+  _halfSecondTimer.AttachOnTick([]() { _context->Run(Command::HalfSecondTimerTickCommand); });
 
   _halfSecondTimer.Start();
 }

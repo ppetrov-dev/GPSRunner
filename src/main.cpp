@@ -7,12 +7,16 @@
 #include "MyOledDisplay/MyOledDisplay.h"
 #include "MyGPS/MyGPS.h"
 
+#include "State/Context.h"
+#include "State/ReadyState.h"
+
 OneButton _button = OneButton(PIN_Button, true, true);
 StateMachine _stateMachine;
 MyTimer _halfSecondTimer;
 MyGPS *_myGPS = new MyGPS(GMT_HOURS, GMT_MINUTES);
 InitializingTitle _initializingTitle;
 MyOledDisplay _myOledDisplay = MyOledDisplay(_myGPS, &_initializingTitle);
+Context *_context = new Context();
 
 void OnStateChanged()
 {
@@ -50,6 +54,8 @@ void setup()
   _stateMachine.AttachOnStateChanged(&OnStateChanged);
   _halfSecondTimer.SetInterval(500);
   _halfSecondTimer.AttachOnTick(&OnHalfSecondTimerTick);
+  
+  _context->TransitionTo(new ReadyState(_context));
 
   DEBUG_PORT.begin(9600);
   while (!DEBUG_PORT)

@@ -11,6 +11,10 @@ Context::Context(MyGPS *myGPS) : _state(nullptr), _myGPS(myGPS)
                                                      PIN_Display_Reset);
 }
 
+void Context::SaveStartLocation()
+{
+    _startLocation = _myGPS->GetCurrentLocation();
+}
 void Context::Init()
 {
     _oled->setContrast(255);

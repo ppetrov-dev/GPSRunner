@@ -1,27 +1,37 @@
-#include <Arduino.h> //TODO: should be removed
 #include <State/ReadyPageState.h>
 #include <State/SearchingPageState.h>
 #include <State/Context.h>
-// #include <MyConverter.h>
+#include <Utils/Utils.h>
 
 void SearchingPageState::Enter()
 {
-     auto display = _context->_oled;
-    // auto gps = _context->_myGPS;
+    _context->_oled->drawString(0, 0, "Searching");
+    PrintDots();
+    _context->_oled->draw2x2String(0, 2, "Sats: ");
+    PrintSats();
+}
+void SearchingPageState::PrintDots()
+{
+    _context->_oled->drawString(9, 0, _animatedDots.Get());
+}
 
-     display->drawString(0, 0, _searchingText->GetText());
-
-    // auto satellites = "Sats: " + String(gps->GetSatellitesCount());
-    // auto satellitesCharArray = MyConverter::StringToCharArray(satellites);
-    // display->draw2x2String(0, 2, satellitesCharArray);
+void SearchingPageState::PrintSats()
+{
+    _context->_oled->draw2x2String(11, 2, Utils::IntToCharArray(_context->_myGPS->GetSatellitesCount()));
 }
 void SearchingPageState::Run(Command command)
 {
-    if (command == Command::HalfSecondTimerTickCommand)
+    switch (command)
     {
-        _searchingText->Next();
-        Enter();
-        if (_context->_myGPS->GetIsValid())
-            _context->TransitionTo(new ReadyPageState);
+    case Command::HalfSecondTimerTickCommand:
+        _animatedDots.Next();
+        PrintDots();
+        PrintSats();
+        break;
+    case Command::ValidGpsDataCommand:
+        _context->TransitionTo(new ReadyPageState);
+        break;
+    default:
+        break;
     }
 }

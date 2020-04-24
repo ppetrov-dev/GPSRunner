@@ -2,21 +2,15 @@
 #define SearchingPageStateH
 
 #include <State/StateBase.h>
-#include <SearchingText.h>
+#include <AnimatedDots.h>
 class SearchingPageState : public StateBase
 {
 private:
-    SearchingText *_searchingText;
+    AnimatedDots _animatedDots;
 
 public:
-    SearchingPageState()
-    {
-        _searchingText = new SearchingText();
-    }
-    ~SearchingPageState()
-    {
-        delete _searchingText;
-    }
+    void PrintDots();
+    void PrintSats();
     void Enter() override;
     void Run(Command command) override;
 };

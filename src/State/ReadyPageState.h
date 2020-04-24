@@ -9,6 +9,7 @@ class ReadyPageState : public StateBase
 private:
     LongPressButtonText *_longPressButtonText = new LongPressButtonText();
     void PrintLongPressButtonText();
+    void PrintChangableData();
     public:
         ~ReadyPageState()
         {

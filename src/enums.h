@@ -6,6 +6,9 @@ enum Command
   ButtonClickCommand,
   ButtonLongPressCommand,
   HalfSecondTimerTickCommand,
+  OneSecondTimerTickCommand,
+  ValidGpsDataCommand,
+  InvalidGpsDataCommand,
 };
 
 #endif

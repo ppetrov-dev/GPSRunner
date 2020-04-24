@@ -62,7 +62,7 @@ String MyGPS::GetDateTime()
      auto datetime = String(_fix.dateTime.date) + "." + String(_fix.dateTime.month) + " " + String(_fix.dateTime.hours) + ":" + String(_fix.dateTime.minutes);
     return datetime;
 }
-int MyGPS::GetSatellitesCount()
+uint8_t MyGPS::GetSatellitesCount()
 {
     return _fix.satellites;
 }

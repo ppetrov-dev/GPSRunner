@@ -26,6 +26,7 @@ static const uint8_t DST_FallDate = 31; // latest last Sunday
 static const uint8_t DST_FallHour = 1;
 #define CalculateDaylightSavingTime
 #endif
+
 class MyGPS
 {
 private:
@@ -40,7 +41,7 @@ public:
     MyGPS(int gmtHours, int gmtMinutes);
 
     bool GetIsValid();
-    int GetSatellitesCount();
+    uint8_t GetSatellitesCount();
     NeoGPS::Location_t GetCurrentLocation();
     void ReadWhileAvailable();
     float GetSpeedKmh();

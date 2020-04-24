@@ -9,7 +9,7 @@ class Context
 {
 private:
     StateBase *_state;
-
+    NeoGPS::Location_t _startLocation;
     void DisposeStateIfNeeded();
 
 public:
@@ -18,6 +18,7 @@ public:
     void TransitionTo(StateBase *state);
     void Init();
     void Run(Command command);
+    void SaveStartLocation();
 
     MyGPS *_myGPS;
     U8X8_SSD1306_128X64_NONAME_4W_SW_SPI *_oled;

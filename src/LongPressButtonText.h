@@ -12,12 +12,11 @@ public:
         _isOn = !_isOn;
     }
 
-    char *GetText()
+    const char *GetText()
     {
-        if (_isOn)
-            return "<Long press btn>";
-
-        return "                ";
+        return (const char *)(_isOn
+                                  ? "<Long press btn>"
+                                  : "                ");
     }
 };
 

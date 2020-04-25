@@ -5,16 +5,41 @@
 void SecondPageState::Enter()
 {
     auto display = _context->_oled;
-    display->drawString(0, 0, "Avg: 45");
     display->drawString(13, 0, "2/4");
-
-    display->draw2x2String(0, 2, "Spd: 123");
-    display->drawString(0, 6, "Max: 123 km/h");
+    PrintStopwatch();
+    display->drawString(7, 0, "km/h");
+    display->drawString(0, 6, "Odo:");
+    display->drawString(14, 6, "km");
+    PrintChangableData();
 }
+void SecondPageState::PrintChangableData()
+{
+    _context->_oled->drawString(0, 0, _context->SpeedKmhAsCharArray());
+    _context->_oled->drawString(5, 6, _context->OdometerInKmAsCharArray());
+}
+void SecondPageState::PrintStopwatch()
+{
+    _context->_oled->draw2x2String(0, 2, _context->StopwatchAsCharArray());
+}
+
 void SecondPageState::Run(Command command)
 {
-    if (command == Command::ButtonClickCommand)
+    switch (command)
     {
+    case Command::OneSecondTimerTickCommand:
+        PrintStopwatch();
+        break;
+    case Command::ValidGpsDataCommand:
+        _context->UpdateData();
+        PrintChangableData();
+        break;
+    case Command::ButtonClickCommand:
         _context->TransitionTo(new ThirdPageState);
+        break;
+    case Command::ButtonLongPressCommand:
+        _context->ResetData();
+        break;
+    default:
+        break;
     }
 }

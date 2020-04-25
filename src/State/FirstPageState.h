@@ -6,9 +6,10 @@
 class FirstPageState : public StateBase
 {
 private:
-    /* data */
+    void PrintChangableData();
 public:
     void Run(Command command) override;
     void Enter() override;
 };
+
 #endif //FirstPageStateH

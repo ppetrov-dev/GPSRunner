@@ -57,10 +57,13 @@ float MyGPS::GetSpeedKmh()
 {
     return _fix.speed_kph();
 }
-String MyGPS::GetDateTime()
+float MyGPS::GetDistanceInKmTo(NeoGPS::Location_t &p)
 {
-     auto datetime = String(_fix.dateTime.date) + "." + String(_fix.dateTime.month) + " " + String(_fix.dateTime.hours) + ":" + String(_fix.dateTime.minutes);
-    return datetime;
+    return _fix.location.DistanceKm(p);
+}
+NeoGPS::time_t MyGPS::GetDateTime()
+{
+    return _fix.dateTime;
 }
 uint8_t MyGPS::GetSatellitesCount()
 {

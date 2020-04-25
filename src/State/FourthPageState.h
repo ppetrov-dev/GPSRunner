@@ -6,7 +6,9 @@
 class FourthPageState : public StateBase
 {
 private:
-    /* data */
+    void PrintDateTime();
+    void PrintChangableData();
+
 public:
     void Run(Command command) override;
     void Enter() override;

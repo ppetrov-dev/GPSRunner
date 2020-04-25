@@ -3,9 +3,9 @@
 
 #include <enums.h>
 
-#define DEBUG 1
+// #define DEBUG 0
 
-#define DISPLAY_TIMEOUT_SECONDS 60
+// #define DISPLAY_TIMEOUT_SECONDS 60
 
 #define PIN_Display_Clock 13
 #define PIN_Display_Data 11
@@ -18,8 +18,4 @@
 #define GMT_HOURS  +2L        
 #define GMT_MINUTES  0L     
 
-extern "C"
-{
-    typedef void (*callback)(void);
-}
 #endif

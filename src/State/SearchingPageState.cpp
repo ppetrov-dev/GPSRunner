@@ -1,7 +1,6 @@
 #include <State/ReadyPageState.h>
 #include <State/SearchingPageState.h>
 #include <State/Context.h>
-#include <Utils/Utils.h>
 
 void SearchingPageState::Enter()
 {
@@ -17,7 +16,7 @@ void SearchingPageState::PrintDots()
 
 void SearchingPageState::PrintSats()
 {
-    _context->_oled->draw2x2String(11, 2, Utils::IntToCharArray(_context->_myGPS->GetSatellitesCount()));
+    _context->_oled->draw2x2String(11, 2, _context->SatellitesCountAsCharArray());
 }
 void SearchingPageState::Run(Command command)
 {

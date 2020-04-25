@@ -32,7 +32,6 @@ class MyGPS
 private:
     NMEAGPS _gps; // This parses received characters
     gps_fix _fix; // This contains all the parsed pieces
-
     NeoGPS::clock_t _timezoneOffset;
     void AdjustTime(NeoGPS::time_t &dt);
     void ReadAndAdjustTime();
@@ -45,6 +44,7 @@ public:
     NeoGPS::Location_t GetCurrentLocation();
     void ReadWhileAvailable();
     float GetSpeedKmh();
-    String GetDateTime();
+    float GetDistanceInKmTo(NeoGPS::Location_t &p);
+    NeoGPS::time_t GetDateTime();
 };
 #endif //myGPSH

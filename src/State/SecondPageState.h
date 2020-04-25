@@ -6,7 +6,9 @@
 class SecondPageState : public StateBase
 {
 private:
-    /* data */
+    void PrintChangableData();
+    void PrintStopwatch();
+
 public:
     void Run(Command command) override;
     void Enter() override;

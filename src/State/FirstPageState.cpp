@@ -1,29 +1,41 @@
-#include <State/FirstPageState.h>
 #include <State/SecondPageState.h>
+#include <State/FirstPageState.h>
 #include <State/Context.h>
 
 void FirstPageState::Enter()
 {
     auto display = _context->_oled;
-    //  _myGPS->GetDateTime()
-    display->drawString(0, 0, "04.04");
-    display->drawString(6, 0, "16:10");
-
+    display->drawString(0, 0, "Avg:");
     display->drawString(13, 0, "1/4");
+    display->drawString(11, 3, "km/h");
+    display->drawString(0, 6, "Max:");
+    display->drawString(9, 6, "km/h");
 
-    display->drawString(0, 2, "Spd: 123");
-    display->drawString(11, 2, "(123)");
-
-    display->drawString(0, 4, "Odo: 1234");
-
-    display->drawString(0, 6, "Dst: 1.23");
-    display->drawString(10, 6, "(1.23)");
+    PrintChangableData();
 }
+void FirstPageState::PrintChangableData()
+{
+    register auto display = _context->_oled;
 
+    display->drawString(4, 0, _context->AverageSpeedKmhAsCharArray());
+    display->draw2x2String(0, 2, _context->SpeedKmhAsCharArray());
+    display->drawString(4, 6, _context->MaxSpeedKmhAsCharArray());
+}
 void FirstPageState::Run(Command command)
 {
-    if (command == Command::ButtonClickCommand)
+    switch (command)
     {
+    case Command::ValidGpsDataCommand:
+        _context->UpdateData();
+        PrintChangableData();
+        break;
+    case Command::ButtonClickCommand:
         _context->TransitionTo(new SecondPageState);
+        break;
+    case Command::ButtonLongPressCommand:
+        _context->ResetData();
+        break;
+    default:
+        break;
     }
 }

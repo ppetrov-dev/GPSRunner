@@ -6,7 +6,7 @@
 
 void ReadyPageState::Enter()
 {
-    register auto display = _context->_oled;
+    auto display = _context->_oled;
     display->drawString(0, 0, "Ready");
 
     display->drawString(0, 2, "Lat:");
@@ -18,19 +18,13 @@ void ReadyPageState::Enter()
 
 void ReadyPageState::PrintChangableData()
 {
-    register auto display = _context->_oled;
-    register auto gps = _context->_myGPS;
+    auto display = _context->_oled;
+    auto satellites = "Sats(" + String(_context->SatellitesCountAsCharArray()) + ")";
+    display->drawString(8, 0, Utils::StringToCharArray(satellites));
 
-    auto satellites = "Sats(" + String(gps->GetSatellitesCount()) + ")";
-    auto satellitesCharArray = Utils::StringToCharArray(satellites);
-    display->drawString(8, 0, satellitesCharArray);
-
-    auto location = gps->GetCurrentLocation();
-    auto lat = Utils::PointToCharArray(location.lat());
-    display->drawString(5, 2, lat);
-
-    auto lon = Utils::PointToCharArray(location.lon());
-    display->drawString(5, 4, lon);
+    auto location = _context->GetCurrentLocation();
+    display->drawString(5, 2, _context->PointAsCharArray(location.lat()));
+    display->drawString(5, 4, _context->PointAsCharArray(location.lon()));
 }
 void ReadyPageState::PrintLongPressButtonText()
 {
@@ -43,12 +37,12 @@ void ReadyPageState::Run(Command command)
     case Command::ValidGpsDataCommand:
         PrintChangableData();
         break;
-    case Command::OneSecondTimerTickCommand:
+    case Command::_200msTimerTickCommand:
         _longPressButtonText->Next();
         PrintLongPressButtonText();
         break;
     case Command::ButtonLongPressCommand:
-        _context->SaveStartLocation();
+        _context->ResetData();
         _context->TransitionTo(new FirstPageState);
         break;
     case Command::InvalidGpsDataCommand:

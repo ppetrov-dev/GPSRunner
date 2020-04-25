@@ -6,10 +6,11 @@
 class ThirdPageState : public StateBase
 {
 private:
-    /* data */
+    void PrintChangableData();
+    void PrintStopWatch();
+
 public:
     void Run(Command command) override;
     void Enter() override;
 };
-
 #endif //ThirdPageStateH

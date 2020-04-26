@@ -30,7 +30,6 @@ void SecondPageState::Run(Command command)
         PrintStopwatch();
         break;
     case Command::ValidGpsDataCommand:
-        _context->UpdateData();
         PrintChangableData();
         break;
     case Command::ButtonClickCommand:

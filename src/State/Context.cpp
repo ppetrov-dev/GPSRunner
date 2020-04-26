@@ -72,15 +72,19 @@ void Context::TransitionTo(StateBase *state)
 }
 char *Context::OdometerInKmAsCharArray()
 {
-    return Utils::DoubleToCharArray(_odometerInKm, /*precision*/ 2, /*width*/ 4);
+    auto precision = Utils::DeterminePrecision(_odometerInKm);
+    return Utils::DoubleToCharArray(_odometerInKm, precision, /*width*/ 4);
 }
 char *Context::DistanceInKmToStartLocationAsCharArray()
 {
-    return Utils::DoubleToCharArray(_myGPS->GetDistanceInKmTo(_startLocation), /*precision*/ 1, /*width*/ 4);
+    auto distanceInKm = _myGPS->GetDistanceInKmTo(_startLocation);
+    auto precision = Utils::DeterminePrecision(distanceInKm);
+    return Utils::DoubleToCharArray(distanceInKm, precision, /*width*/ 4);
 }
 char *Context::MaxDistanceInKmAsCharArray()
 {
-    return Utils::DoubleToCharArray(_maxDistanceInKm, /*precision*/ 1, /*width*/ 4);
+    auto precision = Utils::DeterminePrecision(_maxDistanceInKm);
+    return Utils::DoubleToCharArray(_maxDistanceInKm, precision, /*width*/ 4);
 }
 char *Context::SpeedKmhAsCharArray()
 {
@@ -94,7 +98,7 @@ char *Context::AverageSpeedKmhAsCharArray()
 {
     auto seconds = MyDateTimeConverters::MillisecondsToSeconds(GetTimeDifferenceInMilliseconds());
     if (seconds == 0)
-        return " N/A";
+        return "   N/A";
     auto kmh = _odometerInKm * 5000 / seconds / 18;
     return Utils::DoubleToCharArray(kmh, /*precision*/ 0, /*width*/ 4);
 }

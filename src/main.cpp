@@ -13,7 +13,13 @@ Context *_context = new Context(_myGPS);
 void OnHalfSecondTimerElapsed()
 {
   _context->Run(Command::HalfSecondTimerTickCommand);
-  _context->Run(_myGPS->GetIsValid() ? Command::ValidGpsDataCommand : Command::InvalidGpsDataCommand);
+  if (_myGPS->GetIsValid())
+  {
+    _context->UpdateData();
+    _context->Run(Command::ValidGpsDataCommand);
+  }
+  else
+    _context->Run(Command::InvalidGpsDataCommand);
 }
 
 void setup()

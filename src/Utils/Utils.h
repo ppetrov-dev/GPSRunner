@@ -10,6 +10,7 @@ private:
     static char *_buffer;
 
 public:
+static unsigned char DeterminePrecision(float value);
     static char *StringToCharArray(String string);
     static char *PointToCharArray(int32_t point, unsigned char precision, signed char width);
     static char *DoubleToCharArray(double value, unsigned char precision, signed char width);

@@ -26,7 +26,6 @@ void FirstPageState::Run(Command command)
     switch (command)
     {
     case Command::ValidGpsDataCommand:
-        _context->UpdateData();
         PrintChangableData();
         break;
     case Command::ButtonClickCommand:

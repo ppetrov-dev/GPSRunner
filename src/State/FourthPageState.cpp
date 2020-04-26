@@ -33,7 +33,6 @@ void FourthPageState::Run(Command command)
         PrintDateTime();
         break;
     case Command::ValidGpsDataCommand:
-        _context->UpdateData();
         PrintChangableData();
         break;
     case Command::ButtonClickCommand:

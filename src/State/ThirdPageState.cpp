@@ -37,7 +37,6 @@ void ThirdPageState::Run(Command command)
         PrintStopWatch();
         break;
     case Command::ValidGpsDataCommand:
-        _context->UpdateData();
         PrintChangableData();
         break;
     case Command::ButtonClickCommand:

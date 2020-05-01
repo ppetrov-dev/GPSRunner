@@ -15,6 +15,9 @@ Context::Context(MyGPS *myGPS) : _state(nullptr), _myGPS(myGPS)
 void Context::UpdateData()
 {
     register auto speed = _myGPS->GetSpeedKmh();
+    if(speed < 3)
+        return;
+
     if (speed > _maxSpeed)
         _maxSpeed = speed;
     register auto distanceToStartLocation = _myGPS->GetDistanceInKmTo(_startLocation);

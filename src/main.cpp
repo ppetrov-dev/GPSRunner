@@ -12,7 +12,6 @@ Context *_context = new Context(_myGPS);
 
 void OnHalfSecondTimerElapsed()
 {
-  _context->Run(Command::HalfSecondTimerTickCommand);
   if (_myGPS->GetIsValid())
   {
     _context->UpdateData();
@@ -20,6 +19,7 @@ void OnHalfSecondTimerElapsed()
   }
   else
     _context->Run(Command::InvalidGpsDataCommand);
+  _context->Run(Command::HalfSecondTimerElapsedCommand);
 }
 
 void setup()
@@ -33,11 +33,11 @@ void setup()
   _button.attachLongPressStart([]() { _context->Run(Command::ButtonLongPressCommand); });
   _button.attachDoubleClick([]() { _context->Run(Command::ButtonDoubleClickCommand); });
   _oneSecondTimer.SetInterval(1000);
-  _oneSecondTimer.AttachOnElapsed([]() { _context->Run(Command::OneSecondTimerTickCommand); });
+  _oneSecondTimer.AttachOnElapsed([]() { _context->Run(Command::OneSecondTimerElapsedCommand); });
   _halfSecondTimer.SetInterval(500);
   _halfSecondTimer.AttachOnElapsed(&OnHalfSecondTimerElapsed);
   _200msTimer.SetInterval(200);
-  _200msTimer.AttachOnElapsed([]() { _context->Run(Command::_200msTimerTickCommand); });
+  _200msTimer.AttachOnElapsed([]() { _context->Run(Command::_200msTimerElapsedCommand); });
 
   _oneSecondTimer.Start();
   _halfSecondTimer.Start();

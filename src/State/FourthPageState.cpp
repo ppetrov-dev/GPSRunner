@@ -1,5 +1,6 @@
 #include <State/FourthPageState.h>
 #include <State/FirstPageState.h>
+#include <State/InvalidState.h>
 #include <State/Context.h>
 
 void FourthPageState::Enter()
@@ -29,11 +30,14 @@ void FourthPageState::Run(Command command)
 {
     switch (command)
     {
-    case Command::OneSecondTimerTickCommand:
+    case Command::OneSecondTimerElapsedCommand:
         PrintDateTime();
         break;
     case Command::ValidGpsDataCommand:
         PrintChangableData();
+        break;
+    case Command::InvalidGpsDataCommand:
+        _context->TransitionTo(new InvalidState(Page::FourthPage));
         break;
     case Command::ButtonClickCommand:
         _context->TransitionTo(new FirstPageState);

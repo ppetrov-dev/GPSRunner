@@ -22,7 +22,7 @@ void SearchingPageState::Run(Command command)
 {
     switch (command)
     {
-    case Command::HalfSecondTimerTickCommand:
+    case Command::HalfSecondTimerElapsedCommand:
         _animatedDots.Next();
         PrintDots();
         PrintSats();

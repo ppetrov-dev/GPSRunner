@@ -75,7 +75,7 @@ NeoGPS::Location_t MyGPS::GetCurrentLocation()
 }
 bool MyGPS::GetIsValid()
 {
-    return _fix.valid.date && _fix.valid.time && _fix.valid.speed && _fix.valid.satellites && _fix.valid.status;
+    return _fix.valid.date && _fix.valid.time && _fix.valid.speed && _fix.valid.satellites && _fix.valid.location && _fix.valid.status;
 }
 void MyGPS::ReadAndAdjustTime()
 {

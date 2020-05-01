@@ -37,7 +37,7 @@ void ReadyPageState::Run(Command command)
     case Command::ValidGpsDataCommand:
         PrintChangableData();
         break;
-    case Command::_200msTimerTickCommand:
+    case Command::_200msTimerElapsedCommand:
         _longPressButtonText->Next();
         PrintLongPressButtonText();
         break;

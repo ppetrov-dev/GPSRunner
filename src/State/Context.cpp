@@ -98,9 +98,9 @@ char *Context::AverageSpeedKmhAsCharArray()
 {
     auto seconds = MyDateTimeConverters::MillisecondsToSeconds(GetTimeDifferenceInMilliseconds());
     if (seconds == 0)
-        return "   N/A";
-    auto kmh = _odometerInKm * 5000 / seconds / 18;
-    return Utils::DoubleToCharArray(kmh, /*precision*/ 0, /*width*/ 4);
+        return " N/A";
+    auto kmh = _odometerInKm * 1000 * 18 / seconds / 5;
+    return Utils::DoubleToCharArray(kmh, /*precision*/ 1, /*width*/ 4);
 }
 char *Context::DateTimeAsCharArray()
 {

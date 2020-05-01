@@ -1,5 +1,6 @@
 #include <State/SecondPageState.h>
 #include <State/FirstPageState.h>
+#include <State/InvalidState.h>
 #include <State/Context.h>
 
 void FirstPageState::Enter()
@@ -28,6 +29,9 @@ void FirstPageState::Run(Command command)
     case Command::ValidGpsDataCommand:
         PrintChangableData();
         break;
+    case Command::InvalidGpsDataCommand:
+        _context->TransitionTo(new InvalidState(Page::FirstPage));
+         break;
     case Command::ButtonClickCommand:
         _context->TransitionTo(new SecondPageState);
         break;

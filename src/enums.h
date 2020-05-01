@@ -6,11 +6,18 @@ enum Command
   ButtonClickCommand,
   ButtonDoubleClickCommand,
   ButtonLongPressCommand,
-  HalfSecondTimerTickCommand,
-  OneSecondTimerTickCommand,
-  _200msTimerTickCommand,
+  HalfSecondTimerElapsedCommand,
+  OneSecondTimerElapsedCommand,
+  _200msTimerElapsedCommand,
   ValidGpsDataCommand,
   InvalidGpsDataCommand,
+};
+
+enum Page{
+  FirstPage,
+  SecondPage,
+  ThirdPage,
+  FourthPage
 };
 
 #endif
